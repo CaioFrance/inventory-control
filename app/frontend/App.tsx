@@ -1,9 +1,9 @@
-import React from "react";
+import { Box, Typography } from "@mui/material";
 
-export function App() {
+export default function () {
   return (
-    <div>
-      <h1>Inventory Control</h1>
-    </div>
+    <Box>
+      <Typography variant="h3">Inventory Control</Typography>
+    </Box>
   );
 }
