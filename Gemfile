@@ -13,10 +13,11 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
-gem 'dotenv-rails', '~> 2.8', '>= 2.8.1'
-gem 'vite_rails', '~> 3.0', '>= 3.0.14'
-gem 'kaminari', '~> 1.2', '>= 1.2.2'
-gem 'active_model_serializers', '~> 0.10.13'
+gem "dotenv-rails", "~> 2.8", ">= 2.8.1"
+gem "vite_rails", "~> 3.0", ">= 3.0.14"
+gem "kaminari", "~> 1.2", ">= 1.2.2"
+gem "active_model_serializers", "~> 0.10.13"
+gem "rack-cors"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
