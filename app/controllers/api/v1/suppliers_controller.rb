@@ -3,9 +3,6 @@ class Api::V1::SuppliersController < ApplicationController
 
   before_action :find_supplier, only: %i(show update destroy)
   rescue_from ActiveRecord::RecordNotFound, with: :supplier_not_found
-  rescue_from ActionController::ParameterMissing do |e|
-    params_missing_error(e.message)
-  end
 
   def index
     @suppliers = Supplier.page(current_page()).per(per_page())
