@@ -13,4 +13,6 @@
 #
 class Supplier < ApplicationRecord
   has_many :products
+
+  validates :address, :city, :name, :postal_code, :state, presence: true
 end

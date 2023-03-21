@@ -1,8 +1,11 @@
 class Api::V1::SuppliersController < ApplicationController
   include Paginable
 
-  before_action :find_supplier, only: [:show]
+  before_action :find_supplier, only: %i(show update)
   rescue_from ActiveRecord::RecordNotFound, with: :supplier_not_found
+  rescue_from ActionController::ParameterMissing do |e|
+    params_missing_error(e.message)
+  end
 
   def index
     @suppliers = Supplier.page(current_page()).per(per_page())
@@ -13,15 +16,23 @@ class Api::V1::SuppliersController < ApplicationController
   def create
     @supplier = Supplier.new(supplier_params)
 
-    if @supplier&.save
+    if @supplier.save
       render json: @supplier, status: :created
     else
-      render json: @supplier.errors.full_messages, status: :bad_request
+      render json: {message: @supplier.errors.full_messages, status: 400}, status: :bad_request
     end
   end
 
   def show
     render json: @supplier
+  end
+
+  def update
+    if @supplier&.update(supplier_params)
+      render json: @supplier
+    else
+      render json: {message: @supplier.errors.full_messages, status: 400}, status: :bad_request
+    end
   end
 
   private
