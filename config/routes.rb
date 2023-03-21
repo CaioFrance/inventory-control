@@ -5,4 +5,5 @@ Rails.application.routes.draw do
     end
   end
   root 'home#index'
+  resources '*a', to: 'application#not_found'
 end
