@@ -9,6 +9,4 @@ development:
 
 production:
   <<: *default
-  database: inventory_control_production
-  username: inventory_control
-  password: <%= ENV["INVENTORY_CONTROL_DATABASE_PASSWORD"] %>
+  url: <%= ENV.fetch("DATABASE_URL") %>

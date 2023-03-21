@@ -4,8 +4,21 @@
   "engines": {
     "node": "v16.17.1"
   },
+  "scripts": {
+    "build": "bin/vite build"
+  },
   "devDependencies": {
+    "@types/node": "^18.15.5",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "typescript": "^5.0.2",
     "vite": "^4.2.0",
+    "vite-plugin-full-reload": "^1.0.5",
     "vite-plugin-ruby": "^3.2.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^3.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
