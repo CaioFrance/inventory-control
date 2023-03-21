@@ -33,5 +33,13 @@ module InventoryControl
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.api_only = true
+
+    config.generators do |g|
+      g.template_engine nil
+      g.assets(false)
+      g.helper(false)
+    end
   end
 end
