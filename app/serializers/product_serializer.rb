@@ -23,10 +23,9 @@
 #
 #  fk_rails_...  (supplier_id => suppliers.id)
 #
-class Product < ApplicationRecord
-  belongs_to :supplier
-  has_many :product_records, dependent: :destroy
-
-  validates :amount, :description, :last_entry, presence: true
-  validates :last_outing, :min_amount, :name, :unit_price, presence: true
+class ProductSerializer < ActiveModel::Serializer
+  attributes  :id, :amount, :description, :name, :unit_price,
+              :last_entry, :last_outing, :min_amount
+  
+  has_one :supplier
 end
