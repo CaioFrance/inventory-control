@@ -6,7 +6,6 @@ import FullReload from "vite-plugin-full-reload";
 export default defineConfig({
   plugins: [
     RubyPlugin(),
-    react(),
     FullReload(["config/routes.rb", "app/views/**/*", "app/frontend/**/*"], {
       delay: 200,
     }),
