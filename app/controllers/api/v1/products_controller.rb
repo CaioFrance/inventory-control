@@ -1,6 +1,7 @@
 class Api::V1::ProductsController < ApplicationController
   include Paginable
 
+  before_action :authorize_request
   before_action :find_product, only: %i(show update destroy)
 
   def index
