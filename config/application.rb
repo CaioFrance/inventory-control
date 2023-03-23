@@ -41,5 +41,7 @@ module InventoryControl
       g.assets(false)
       g.helper(false)
     end
+
+    config.autoload_paths << "#{Rails.root}/lib"
   end
 end
