@@ -2,10 +2,6 @@ class Api::V1::SuppliersController < ApplicationController
   include Paginable
 
   before_action :find_supplier, only: %i(show update destroy)
-  rescue_from ActiveRecord::RecordNotFound, with: :supplier_not_found
-  rescue_from ActionController::ParameterMissing do |e|
-    params_missing_error(e.message)
-  end
 
   def index
     @suppliers = Supplier.page(current_page()).per(per_page())
@@ -49,12 +45,5 @@ class Api::V1::SuppliersController < ApplicationController
 
   def supplier_params
     params.require(:supplier).permit(:address, :city, :name, :postal_code, :state)
-  end
-
-  def supplier_not_found
-    render json: {
-      message: "Supplier with id #{params[:id]} does not exists",
-      status: 404
-    }, status: :not_found
   end
 end
