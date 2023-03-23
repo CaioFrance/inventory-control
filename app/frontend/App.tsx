@@ -1,10 +1,13 @@
-import { Typography } from "@mui/material";
+import AppRouter from "./AppRouter";
+import { BrowserRouter } from "react-router-dom";
 import Layout from "./src/layout/Layout";
 
 export default function () {
   return (
-    <Layout>
-      <Typography variant="h3">Inventory Control</Typography>
-    </Layout>
+    <BrowserRouter>
+      <Layout>
+        <AppRouter />
+      </Layout>
+    </BrowserRouter>
   );
 }

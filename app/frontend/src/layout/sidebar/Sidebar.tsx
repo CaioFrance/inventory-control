@@ -1,20 +1,7 @@
-import { ChevronLeft, Inbox } from "@mui/icons-material";
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  styled,
-  Toolbar,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { styled, useTheme } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import { Box } from "@mui/system";
 import util from "../util";
+import { drawer } from "./drawerList";
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -50,37 +37,9 @@ interface ISidebarProps {
 export default ({ toggleDrawer, drawerOpen }: ISidebarProps) => {
   const theme = useTheme();
 
-  const drawer = (
-    <Box>
-      <Toolbar
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          px: [1],
-        }}
-      >
-        <IconButton onClick={toggleDrawer}>
-          <ChevronLeft />
-        </IconButton>
-      </Toolbar>
-      <Divider />
-      <List component="nav">
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Inbox />
-            </ListItemIcon>
-            <ListItemText primary="Inventory" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
-  );
-
   return (
     <Drawer variant="permanent" open={drawerOpen}>
-      {drawer}
+      {drawer(toggleDrawer)}
     </Drawer>
   );
 };
