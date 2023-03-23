@@ -5,6 +5,6 @@ Rails.application.routes.draw do
       resources :suppliers
     end
   end
-  resources '*', to: 'home#index'
+  resources '*a', to: 'home#index'
   root 'home#index'
 end
