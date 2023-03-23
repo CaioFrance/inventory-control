@@ -1,14 +1,12 @@
 import { Person } from "@mui/icons-material";
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import { MouseEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-type AvatarMenuProps = {
-  handleLogout: () => void;
-};
-
-export default function ({ handleLogout }: AvatarMenuProps) {
+export default function () {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -17,6 +15,11 @@ export default function ({ handleLogout }: AvatarMenuProps) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  async function handleLogout() {
+    localStorage.removeItem("iventory.control.token");
+    navigate("/login");
+  }
 
   return (
     <>
