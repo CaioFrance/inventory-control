@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import Layout from "./src/layout/Layout";
 
 export default function () {
   return (
-    <Box>
+    <Layout>
       <Typography variant="h3">Inventory Control</Typography>
-    </Box>
+    </Layout>
   );
 }
