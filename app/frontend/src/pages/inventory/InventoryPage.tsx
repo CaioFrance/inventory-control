@@ -40,85 +40,83 @@ export default () => {
   }
 
   return (
-    <Layout>
-      <Box sx={{ m: 5 }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <h1>Inventory Page</h1>
-          <Box>
-            <Button variant="contained" href="/inventory/new">
-              Add Product
-            </Button>
-          </Box>
+    <Box sx={{ m: 5 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <h1>Inventory Page</h1>
+        <Box>
+          <Button variant="contained" href="/inventory/new">
+            Add Product
+          </Button>
         </Box>
-
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Pagination
-            count={pages}
-            page={currentPage}
-            onChange={handleChangePage}
-            showFirstButton
-            showLastButton
-            color="primary"
-          />
-        </Box>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">ID</TableCell>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Description</TableCell>
-                <TableCell align="center">Last Entry</TableCell>
-                <TableCell align="center">Last Outing</TableCell>
-                <TableCell align="center">Amount</TableCell>
-                <TableCell align="center">Min Amount</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products?.map((prod) => (
-                <TableRow key={prod.id}>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.id}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.name}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.description}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.last_entry}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.last_outing}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.amount}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.min_amount}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    <IconButton color="info">
-                      <Edit />
-                    </IconButton>
-                    <IconButton color="error">
-                      <Delete />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
       </Box>
-    </Layout>
+
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Pagination
+          count={pages}
+          page={currentPage}
+          onChange={handleChangePage}
+          showFirstButton
+          showLastButton
+          color="primary"
+        />
+      </Box>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">ID</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Description</TableCell>
+              <TableCell align="center">Last Entry</TableCell>
+              <TableCell align="center">Last Outing</TableCell>
+              <TableCell align="center">Amount</TableCell>
+              <TableCell align="center">Min Amount</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products?.map((prod) => (
+              <TableRow key={prod.id}>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.id}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.name}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.description}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.last_entry}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.last_outing}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.amount}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.min_amount}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  <IconButton color="info">
+                    <Edit />
+                  </IconButton>
+                  <IconButton color="error">
+                    <Delete />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };

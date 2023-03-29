@@ -1,6 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Box } from "@mui/system";
 import { ReactNode, useState } from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
 
@@ -16,7 +17,7 @@ const theme = createTheme({
   },
 });
 
-export default ({ children }: ILayoutProps) => {
+export default () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -32,7 +33,7 @@ export default ({ children }: ILayoutProps) => {
           component="main"
           sx={{ flexGrow: 1, height: "100vh", overflow: "auto", pt: 10 }}
         >
-          {children}
+          <Outlet />
         </Box>
       </Box>
     </ThemeProvider>
