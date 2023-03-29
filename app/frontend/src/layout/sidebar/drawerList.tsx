@@ -1,4 +1,4 @@
-import { ChevronLeft, Inventory } from "@mui/icons-material";
+import { AddBusiness, ChevronLeft, Warehouse } from "@mui/icons-material";
 import {
   Box,
   Divider,
@@ -28,11 +28,19 @@ export const drawer = (toggleDrawer: () => void) => (
     <Divider />
     <List component="nav">
       <ListItem disablePadding>
-        <ListItemButton>
+        <ListItemButton href="/inventory">
           <ListItemIcon>
-            <Inventory />
+            <Warehouse />
           </ListItemIcon>
           <ListItemText primary="Inventory" />
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton href="/supplier">
+          <ListItemIcon>
+            <AddBusiness />
+          </ListItemIcon>
+          <ListItemText primary="Supplier" />
         </ListItemButton>
       </ListItem>
     </List>

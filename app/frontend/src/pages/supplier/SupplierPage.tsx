@@ -1,45 +1,47 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { getAllProducts, ProductType } from "../services/products";
-import Layout from "../layout/Layout";
+import { getAllSuppliers, Supplier } from "../../services/suppliers";
+import Layout from "../../layout/Layout";
+import { Edit, Delete } from "@mui/icons-material";
 import {
-  IconButton,
   Pagination,
+  TableContainer,
   Paper,
   Table,
-  TableBody,
-  TableCell,
-  TableContainer,
   TableHead,
   TableRow,
+  TableCell,
+  TableBody,
+  IconButton,
 } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
 
 export default () => {
-  const [products, setProducts] = useState<ProductType[] | null>(null);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    getAllProducts().then((res) => {
-      setPages(res!.meta.total_pages === 0 ? 1 : res!.meta.total_pages);
-      setCurrentPage(res!.meta.current_page);
-      setProducts(res!.products);
-    });
+    return () => {
+      getAllSuppliers().then((res) => {
+        setSuppliers(res!.suppliers);
+        setPages(res!.meta.total_pages);
+      });
+    };
   }, []);
 
-  function handleChangePage(event: any, page: number) {
+  async function handleChangePage(event: any, page: number) {
     setCurrentPage(page);
 
-    getAllProducts(page).then((res) => {
-      setProducts(res!.products);
+    getAllSuppliers(page).then((res) => {
+      setSuppliers(res!.suppliers);
     });
   }
 
   return (
     <Layout>
       <Box sx={{ m: 5 }}>
-        <h1>Inventory Page</h1>
+        <h1>Supplier Page</h1>
+
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Pagination
             count={pages}
@@ -56,37 +58,29 @@ export default () => {
               <TableRow>
                 <TableCell align="center">ID</TableCell>
                 <TableCell align="center">Name</TableCell>
-                <TableCell align="center">Description</TableCell>
-                <TableCell align="center">Last Entry</TableCell>
-                <TableCell align="center">Last Outing</TableCell>
-                <TableCell align="center">Amount</TableCell>
-                <TableCell align="center">Min Amount</TableCell>
+                <TableCell align="center">Address</TableCell>
+                <TableCell align="center">City</TableCell>
+                <TableCell align="center">State</TableCell>
                 <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {products?.map((prod) => (
-                <TableRow key={prod.id}>
+              {suppliers?.map((supplier) => (
+                <TableRow key={supplier.id}>
                   <TableCell component="th" scope="row" align="center">
-                    {prod.id}
+                    {supplier.id}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {prod.name}
+                    {supplier.name}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {prod.description}
+                    {supplier.address}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {prod.last_entry}
+                    {supplier.city}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    {prod.last_outing}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.amount}
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="center">
-                    {prod.min_amount}
+                    {supplier.state}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
                     <IconButton>
