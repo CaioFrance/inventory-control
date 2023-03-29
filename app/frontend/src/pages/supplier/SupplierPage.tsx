@@ -50,7 +50,9 @@ export default () => {
         >
           <h1>Supplier Page</h1>
           <Box>
-            <Button variant="contained">ADD SUPPLIER</Button>
+            <Button variant="contained" href="/supplier/new">
+              ADD SUPPLIER
+            </Button>
           </Box>
         </Box>
 
