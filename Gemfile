@@ -20,6 +20,7 @@ gem "active_model_serializers", "~> 0.10.13"
 gem "rack-cors"
 gem "bcrypt"
 gem "jwt", "~> 2.7"
+gem "faker"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
