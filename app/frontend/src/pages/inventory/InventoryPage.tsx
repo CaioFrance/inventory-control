@@ -104,10 +104,10 @@ export default () => {
                     {prod.min_amount}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    <IconButton>
+                    <IconButton color="info">
                       <Edit />
                     </IconButton>
-                    <IconButton>
+                    <IconButton color="error">
                       <Delete />
                     </IconButton>
                   </TableCell>
