@@ -95,10 +95,10 @@ export default () => {
                     {supplier.state}
                   </TableCell>
                   <TableCell component="th" scope="row" align="center">
-                    <IconButton>
+                    <IconButton color="info">
                       <Edit />
                     </IconButton>
-                    <IconButton>
+                    <IconButton color="error">
                       <Delete />
                     </IconButton>
                   </TableCell>

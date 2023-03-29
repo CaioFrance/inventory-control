@@ -13,18 +13,22 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  supplier_id :bigint           not null
+#  user_id     :bigint           not null
 #
 # Indexes
 #
 #  index_products_on_name         (name)
 #  index_products_on_supplier_id  (supplier_id)
+#  index_products_on_user_id      (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (supplier_id => suppliers.id)
+#  fk_rails_...  (user_id => users.id)
 #
 class Product < ApplicationRecord
   belongs_to :supplier
+  belongs_to :user
   has_many :product_records, dependent: :destroy
 
   validates :amount, :description, :last_entry, presence: true

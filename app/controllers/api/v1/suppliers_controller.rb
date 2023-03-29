@@ -5,13 +5,14 @@ class Api::V1::SuppliersController < ApplicationController
   before_action :find_supplier, only: %i(show update destroy)
 
   def index
-    @suppliers = Supplier.page(current_page()).per(per_page())
+    @suppliers = Supplier.where("user_id = ?", @current_user.id)
+                .page(current_page()).per(per_page())
 
     render json: @suppliers, meta: meta_attributes(@suppliers), adapter: :json
   end
 
   def create
-    @supplier = Supplier.new(supplier_params)
+    @supplier = Supplier.new(supplier_params, user: @current_user)
 
     if @supplier.save
       render json: @supplier, status: :created
@@ -41,7 +42,7 @@ class Api::V1::SuppliersController < ApplicationController
   def find_supplier
     id = params[:id]
 
-    @supplier = Supplier.find(id)
+    @supplier = Supplier.find(id).where("user_id = ?", @current_user.id)
   end
 
   def supplier_params
