@@ -1,8 +1,9 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { getAllProducts, ProductType } from "../services/products";
-import Layout from "../layout/Layout";
+import { getAllProducts, ProductType } from "../../services/products";
+import Layout from "../../layout/Layout";
 import {
+  Button,
   IconButton,
   Pagination,
   Paper,
@@ -21,11 +22,13 @@ export default () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    getAllProducts().then((res) => {
-      setPages(res!.meta.total_pages === 0 ? 1 : res!.meta.total_pages);
-      setCurrentPage(res!.meta.current_page);
-      setProducts(res!.products);
-    });
+    return () => {
+      getAllProducts().then((res) => {
+        setPages(res!.meta.total_pages === 0 ? 1 : res!.meta.total_pages);
+        setCurrentPage(res!.meta.current_page);
+        setProducts(res!.products);
+      });
+    };
   }, []);
 
   function handleChangePage(event: any, page: number) {
@@ -39,7 +42,19 @@ export default () => {
   return (
     <Layout>
       <Box sx={{ m: 5 }}>
-        <h1>Inventory Page</h1>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <h1>Inventory Page</h1>
+          <Box>
+            <Button variant="contained">Add Product</Button>
+          </Box>
+        </Box>
+
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Pagination
             count={pages}
