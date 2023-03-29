@@ -13,6 +13,7 @@ import {
   TableCell,
   TableBody,
   IconButton,
+  Button,
 } from "@mui/material";
 
 export default () => {
@@ -40,7 +41,18 @@ export default () => {
   return (
     <Layout>
       <Box sx={{ m: 5 }}>
-        <h1>Supplier Page</h1>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <h1>Supplier Page</h1>
+          <Box>
+            <Button variant="contained">ADD SUPPLIER</Button>
+          </Box>
+        </Box>
 
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Pagination

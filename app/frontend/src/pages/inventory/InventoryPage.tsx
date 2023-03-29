@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllProducts, ProductType } from "../../services/products";
 import Layout from "../../layout/Layout";
 import {
+  Button,
   IconButton,
   Pagination,
   Paper,
@@ -41,7 +42,19 @@ export default () => {
   return (
     <Layout>
       <Box sx={{ m: 5 }}>
-        <h1>Inventory Page</h1>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <h1>Inventory Page</h1>
+          <Box>
+            <Button variant="contained">Add Product</Button>
+          </Box>
+        </Box>
+
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Pagination
             count={pages}
