@@ -51,7 +51,9 @@ export default () => {
         >
           <h1>Inventory Page</h1>
           <Box>
-            <Button variant="contained">Add Product</Button>
+            <Button variant="contained" href="/inventory/new">
+              Add Product
+            </Button>
           </Box>
         </Box>
 
