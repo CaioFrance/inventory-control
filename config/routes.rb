@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post '/login', to: 'authentication#login'
     end
   end
-  resources '*a', to: 'home#index'
+  get '/*path', to: 'home#index'
+  get 'home/index'
   root 'home#index'
 end
