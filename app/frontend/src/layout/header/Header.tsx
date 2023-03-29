@@ -53,7 +53,7 @@ export default ({ open, toggleDrawer }: IAppBarProps) => {
           <Menu />
         </IconButton>
         <Toolbar sx={{ flexGrow: 1 }} />
-        <AvatarMenu handleLogout={() => null} />
+        <AvatarMenu />
       </Toolbar>
     </AppBar>
   );
