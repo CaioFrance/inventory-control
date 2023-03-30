@@ -1,6 +1,10 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { getAllSuppliers, Supplier } from "../../services/suppliers";
+import {
+  deleteSupplier,
+  getAllSuppliers,
+  Supplier,
+} from "../../services/suppliers";
 import Layout from "../../layout/Layout";
 import { Edit, Delete } from "@mui/icons-material";
 import {
@@ -14,29 +18,50 @@ import {
   TableBody,
   IconButton,
   Button,
+  Typography,
 } from "@mui/material";
+import AddSupplierPage from "./new/AddSupplierPage";
 
 export default () => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     return () => {
-      getAllSuppliers().then((res) => {
-        setSuppliers(res!.suppliers);
-        setPages(res!.meta.total_pages);
-      });
+      setAllSuppliers();
     };
   }, []);
+
+  const setAllSuppliers = (page: number | undefined = 1) => {
+    setCurrentPage(page);
+
+    getAllSuppliers(page).then((res) => {
+      setPages(res!.meta.total_pages);
+      setSuppliers(res!.suppliers);
+    });
+  };
 
   async function handleChangePage(event: any, page: number) {
     setCurrentPage(page);
 
-    getAllSuppliers(page).then((res) => {
-      setSuppliers(res!.suppliers);
-    });
+    setAllSuppliers(page);
   }
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleDeleteSupplier = async (supplierId: number) => {
+    await deleteSupplier(supplierId);
+
+    setAllSuppliers();
+  };
 
   return (
     <Box sx={{ m: 5 }}>
@@ -47,15 +72,17 @@ export default () => {
           justifyContent: "space-between",
         }}
       >
-        <h1>Supplier Page</h1>
+        <Typography component="h5" variant="h4">
+          Supplier Page
+        </Typography>
         <Box>
-          <Button variant="contained" href="/supplier/new">
+          <Button variant="contained" onClick={handleOpenModal}>
             ADD SUPPLIER
           </Button>
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
         <Pagination
           count={pages}
           page={currentPage}
@@ -65,7 +92,7 @@ export default () => {
           color="primary"
         />
       </Box>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ boxShadow: 2 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -99,7 +126,10 @@ export default () => {
                   <IconButton color="info">
                     <Edit />
                   </IconButton>
-                  <IconButton color="error">
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDeleteSupplier(supplier.id)}
+                  >
                     <Delete />
                   </IconButton>
                 </TableCell>
@@ -108,6 +138,12 @@ export default () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <AddSupplierPage
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        getAllSuppliers={setAllSuppliers}
+      />
     </Box>
   );
 };

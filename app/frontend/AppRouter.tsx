@@ -4,7 +4,6 @@ import Login from "./src/pages/Login";
 import Registration from "./src/pages/Registration";
 import SupplierPage from "./src/pages/supplier/SupplierPage";
 import AddProductPage from "./src/pages/inventory/new/AddProductPage";
-import AddSupplierPage from "./src/pages/supplier/new/AddSupplierPage";
 import Layout from "./src/layout/Layout";
 
 export default () => {
@@ -16,7 +15,6 @@ export default () => {
         <Route path="/inventory/new" element={<AddProductPage />}></Route>
 
         <Route path="/supplier" element={<SupplierPage />}></Route>
-        <Route path="/supplier/new" element={<AddSupplierPage />}></Route>
       </Route>
 
       <Route path="*" element={<Navigate to="/inventory" replace />}></Route>
