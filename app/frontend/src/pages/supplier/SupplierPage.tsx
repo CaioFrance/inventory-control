@@ -49,6 +49,7 @@ export default () => {
   }
 
   const handleCloseModal = () => {
+    setSupplier(null);
     setOpenModal(false);
   };
 
