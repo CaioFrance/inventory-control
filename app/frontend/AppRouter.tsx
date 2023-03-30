@@ -11,7 +11,8 @@ export default () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index path="/inventory" element={<InventoryPage />}></Route>
+        <Route index element={<InventoryPage />}></Route>
+        <Route path="/inventory" element={<InventoryPage />}></Route>
         <Route path="/inventory/new" element={<AddProductPage />}></Route>
 
         <Route path="/supplier" element={<SupplierPage />}></Route>
