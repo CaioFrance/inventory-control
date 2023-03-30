@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { signInRequest, signUpRequest } from "../services/auth";
+import { signInRequest, signUpRequest } from "../services/authService";
 
 interface IAuthContextProps {
   isAuthenticated: boolean;
@@ -15,7 +15,7 @@ export default ({ children }: { children: ReactNode }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const session = localStorage.getItem("iventory.control.token");
+    const session = localStorage.getItem("inventory.control.token");
 
     if (location.pathname !== "/registration" && !session) {
       navigate("/login");
@@ -29,7 +29,7 @@ export default ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    localStorage.setItem("iventory.control.token", data.token);
+    localStorage.setItem("inventory.control.token", data.token);
 
     navigate("/");
   }

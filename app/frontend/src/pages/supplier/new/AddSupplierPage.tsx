@@ -2,7 +2,12 @@ import { Button, Modal, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { AddSupplier, createSupplier } from "../../../services/suppliers";
+import {
+  AddOrUpdateSupplier,
+  createSupplier,
+  editSupplier,
+  Supplier,
+} from "../../../services/suppliersService";
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,25 +24,45 @@ const style = {
   m: 5,
 };
 
-export default ({
-  openModal,
-  handleCloseModal,
-  getAllSuppliers,
-}: {
+type ModalSupplierProps = {
   openModal: boolean;
+  isAddMode: boolean;
+  supplier: Supplier | null;
   handleCloseModal: () => void;
   getAllSuppliers: (page?: number) => void;
-}) => {
-  const { register, handleSubmit, reset, formState } = useForm<AddSupplier>();
+};
 
-  const handleCreateSupplier = async (params: AddSupplier) => {
-    await createSupplier(params);
+export default ({
+  openModal,
+  isAddMode,
+  supplier,
+  handleCloseModal,
+  getAllSuppliers,
+}: ModalSupplierProps) => {
+  const { register, handleSubmit, reset, formState, setValue } =
+    useForm<Supplier>();
+
+  const handleSupplier = async (params: AddOrUpdateSupplier) => {
+    if (isAddMode) {
+      console.log("aqui?");
+      await createSupplier(params);
+    } else {
+      await editSupplier(params, supplier!.id);
+    }
 
     getAllSuppliers();
     handleCloseModal();
   };
 
   useEffect(() => {
+    if (!isAddMode && supplier !== null) {
+      setValue("name", supplier.name);
+      setValue("address", supplier.address);
+      setValue("city", supplier.city);
+      setValue("postal_code", supplier.postal_code);
+      setValue("state", supplier.state);
+    }
+
     if (formState.isSubmitSuccessful) {
       reset({ address: "", city: "", name: "", postal_code: "", state: "" });
     }
@@ -47,7 +72,7 @@ export default ({
     <Modal open={openModal} onClose={handleCloseModal}>
       <Box sx={{ ...style }}>
         <Typography component="h1" variant="h5">
-          New Supplier
+          {isAddMode ? "New Supplier" : "Edit Supplier"}
         </Typography>
 
         <Box
@@ -59,7 +84,7 @@ export default ({
           aria-labelledby="child-modal-title"
           aria-describedby="child-modal-description"
         >
-          <Box component="form" onSubmit={handleSubmit(handleCreateSupplier)}>
+          <Box component="form" onSubmit={handleSubmit(handleSupplier)}>
             <TextField
               label="Name"
               margin="normal"
@@ -102,7 +127,7 @@ export default ({
             />
             <Box display="flex" justifyContent="center">
               <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-                Create
+                {isAddMode ? "Create" : "Edit"}
               </Button>
             </Box>
           </Box>

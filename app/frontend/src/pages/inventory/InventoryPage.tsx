@@ -1,7 +1,6 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { getAllProducts, ProductType } from "../../services/products";
-import Layout from "../../layout/Layout";
+import { getAllProducts, ProductType } from "../../services/productsService";
 import {
   Button,
   IconButton,
