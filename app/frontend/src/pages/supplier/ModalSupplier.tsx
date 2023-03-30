@@ -7,7 +7,7 @@ import {
   createSupplier,
   editSupplier,
   Supplier,
-} from "../../../services/suppliersService";
+} from "../../services/suppliersService";
 
 const style = {
   position: "absolute" as "absolute",
