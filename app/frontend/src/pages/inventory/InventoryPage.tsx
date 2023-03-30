@@ -122,6 +122,7 @@ export default () => {
               <TableCell align="center">Last Outing</TableCell>
               <TableCell align="center">Amount</TableCell>
               <TableCell align="center">Min Amount</TableCell>
+              <TableCell align="center">Supplier</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -148,6 +149,9 @@ export default () => {
                 </TableCell>
                 <TableCell component="th" scope="row" align="center">
                   {prod.min_amount}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {prod.supplier!.name}
                 </TableCell>
                 <TableCell component="th" scope="row" align="center">
                   <IconButton color="info">
