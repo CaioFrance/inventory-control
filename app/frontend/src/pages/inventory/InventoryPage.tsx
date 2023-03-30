@@ -1,6 +1,11 @@
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { getAllProducts, ProductType } from "../../services/productsService";
+import {
+  AddOrUpdateProduct,
+  deleteProduct,
+  getAllProducts,
+  ProductType,
+} from "../../services/productsService";
 import {
   Button,
   IconButton,
@@ -14,27 +19,70 @@ import {
   TableRow,
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
+import ModalProduct from "./ModalProduct";
+import {
+  getAllSuppliersWithoutPagination,
+  Supplier,
+} from "../../services/suppliersService";
 
 export default () => {
-  const [products, setProducts] = useState<ProductType[] | null>(null);
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [product, setProduct] = useState<AddOrUpdateProduct | null>(null);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
+  const [isAddMode, setIsAddMode] = useState(false);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
 
   useEffect(() => {
-    getAllProducts().then((res) => {
-      setPages(res!.meta.total_pages === 0 ? 1 : res!.meta.total_pages);
-      setCurrentPage(res!.meta.current_page);
-      setProducts(res!.products);
-    });
+    setAllProducts();
+    fetchAllSuppliers();
   }, []);
 
-  function handleChangePage(event: any, page: number) {
+  const fetchAllSuppliers = () => {
+    getAllSuppliersWithoutPagination().then((res) => {
+      if (res !== undefined) {
+        setSuppliers(res);
+      }
+    });
+  };
+
+  const setAllProducts = (page: number | undefined = 1) => {
     setCurrentPage(page);
 
     getAllProducts(page).then((res) => {
+      setPages(res!.meta.total_pages);
       setProducts(res!.products);
     });
+  };
+
+  async function handleChangePage(event: any, page: number) {
+    setCurrentPage(page);
+
+    setAllProducts(page);
   }
+
+  const handleCloseModal = () => {
+    setProduct(null);
+    setOpenModal(false);
+  };
+
+  const handleOpenModal = (product: AddOrUpdateProduct | null = null) => {
+    if (product === null) {
+      setIsAddMode(true);
+    } else {
+      setIsAddMode(false);
+      setProduct(product);
+    }
+
+    setOpenModal(true);
+  };
+
+  const handleDeleteProduct = async (productId: number) => {
+    await deleteProduct(productId);
+
+    setAllProducts();
+  };
 
   return (
     <Box sx={{ m: 5 }}>
@@ -47,7 +95,7 @@ export default () => {
       >
         <h1>Inventory Page</h1>
         <Box>
-          <Button variant="contained" href="/inventory/new">
+          <Button variant="contained" onClick={() => handleOpenModal()}>
             Add Product
           </Button>
         </Box>
@@ -105,7 +153,10 @@ export default () => {
                   <IconButton color="info">
                     <Edit />
                   </IconButton>
-                  <IconButton color="error">
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDeleteProduct(prod.id)}
+                  >
                     <Delete />
                   </IconButton>
                 </TableCell>
@@ -114,6 +165,15 @@ export default () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <ModalProduct
+        openModal={openModal}
+        isAddMode={isAddMode}
+        product={product}
+        suppliers={suppliers}
+        handleCloseModal={handleCloseModal}
+        getAllProducts={setAllProducts}
+      />
     </Box>
   );
 };

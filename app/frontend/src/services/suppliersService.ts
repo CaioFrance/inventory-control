@@ -17,6 +17,24 @@ export type AddOrUpdateSupplier = {
   state: string;
 };
 
+export async function getAllSuppliersWithoutPagination() {
+  const token = localStorage.getItem("inventory.control.token");
+
+  try {
+    const {
+      data,
+    }: {
+      data: Supplier[];
+    } = await axios.get(`/api/v1/suppliers/all/without_pagination`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function getAllSuppliers(page = 1): Promise<
   | {
       suppliers: Supplier[];
