@@ -4,7 +4,7 @@ import {
   deleteSupplier,
   getAllSuppliers,
   Supplier,
-} from "../../services/suppliers";
+} from "../../services/suppliersService";
 import { Edit, Delete } from "@mui/icons-material";
 import {
   Pagination,

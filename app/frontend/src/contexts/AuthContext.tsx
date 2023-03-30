@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { signInRequest, signUpRequest } from "../services/auth";
+import { signInRequest, signUpRequest } from "../services/authService";
 
 interface IAuthContextProps {
   isAuthenticated: boolean;
