@@ -32,5 +32,5 @@ class Product < ApplicationRecord
   has_many :product_records, dependent: :destroy
 
   validates :amount, :description, :last_entry, presence: true
-  validates :last_outing, :min_amount, :name, :unit_price, presence: true
+  validates :min_amount, :name, :unit_price, presence: true
 end

@@ -44,7 +44,6 @@ export default ({
 
   const handleSupplier = async (params: AddOrUpdateSupplier) => {
     if (isAddMode) {
-      console.log("aqui?");
       await createSupplier(params);
     } else {
       await editSupplier(params, supplier!.id);
@@ -54,13 +53,17 @@ export default ({
     handleCloseModal();
   };
 
+  const setValueForm = (supplier: AddOrUpdateSupplier) => {
+    setValue("name", supplier.name);
+    setValue("address", supplier!.address);
+    setValue("city", supplier!.city);
+    setValue("postal_code", supplier!.postal_code);
+    setValue("state", supplier!.state);
+  };
+
   useEffect(() => {
     if (!isAddMode && supplier !== null) {
-      setValue("name", supplier.name);
-      setValue("address", supplier.address);
-      setValue("city", supplier.city);
-      setValue("postal_code", supplier.postal_code);
-      setValue("state", supplier.state);
+      setValueForm(supplier);
     }
 
     if (formState.isSubmitSuccessful) {

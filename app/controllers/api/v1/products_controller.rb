@@ -6,13 +6,15 @@ class Api::V1::ProductsController < ApplicationController
 
   def index
     @products = Product.where("user_id = ?", @current_user.id)
+                .order("created_at DESC")
                 .page(current_page()).per(per_page())
 
     render json: @products, meta: meta_attributes(@products), adapter: :json
   end
 
   def create
-    @product = Product.new(product_params, user: @current_user)
+    @product = Product.new(product_params)
+    @product.user = @current_user
 
     if @product.save
       register_product_record(@product)
@@ -43,7 +45,7 @@ class Api::V1::ProductsController < ApplicationController
   def find_product
     id = params[:id]
 
-    @product = Product.find(id).where("user_id = ?", @current_user.id)
+    @product = Product.where("user_id = ?", @current_user.id).find(id)
   end
 
   def product_params

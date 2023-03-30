@@ -12,6 +12,13 @@ class Api::V1::SuppliersController < ApplicationController
     render json: @suppliers, meta: meta_attributes(@suppliers), adapter: :json
   end
 
+  def all_without_pagination
+    @suppliers = Supplier.where("user_id = ?", @current_user.id)
+                .order("created_at DESC")
+
+    render json: @suppliers
+  end
+
   def create
     @supplier = Supplier.new(supplier_params)
 

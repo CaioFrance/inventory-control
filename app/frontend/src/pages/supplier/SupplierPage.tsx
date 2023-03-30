@@ -19,7 +19,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import AddSupplierPage from "./ModalSupplier";
+import ModalSupplier from "./ModalSupplier";
 
 export default () => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
@@ -49,6 +49,7 @@ export default () => {
   }
 
   const handleCloseModal = () => {
+    setSupplier(null);
     setOpenModal(false);
   };
 
@@ -148,7 +149,7 @@ export default () => {
         </Table>
       </TableContainer>
 
-      <AddSupplierPage
+      <ModalSupplier
         openModal={openModal}
         isAddMode={isAddMode}
         supplier={supplier}

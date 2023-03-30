@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :users
       resources :products
       resources :suppliers
+      get '/suppliers/all/without_pagination', to: 'suppliers#all_without_pagination'
 
       post '/login', to: 'authentication#login'
     end
