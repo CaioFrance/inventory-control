@@ -21,6 +21,7 @@ import {
   Typography,
 } from "@mui/material";
 import AddSupplierPage from "./new/AddSupplierPage";
+import axios from "axios";
 
 export default () => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
@@ -29,9 +30,7 @@ export default () => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    return () => {
-      setAllSuppliers();
-    };
+    setAllSuppliers();
   }, []);
 
   const setAllSuppliers = (page: number | undefined = 1) => {

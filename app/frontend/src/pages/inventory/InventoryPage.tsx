@@ -22,13 +22,11 @@ export default () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    return () => {
-      getAllProducts().then((res) => {
-        setPages(res!.meta.total_pages === 0 ? 1 : res!.meta.total_pages);
-        setCurrentPage(res!.meta.current_page);
-        setProducts(res!.products);
-      });
-    };
+    getAllProducts().then((res) => {
+      setPages(res!.meta.total_pages === 0 ? 1 : res!.meta.total_pages);
+      setCurrentPage(res!.meta.current_page);
+      setProducts(res!.products);
+    });
   }, []);
 
   function handleChangePage(event: any, page: number) {
