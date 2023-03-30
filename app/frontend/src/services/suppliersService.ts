@@ -86,7 +86,6 @@ export async function editSupplier(
 ) {
   const token = localStorage.getItem("inventory.control.token");
 
-  console.log(token);
   try {
     await axios.put(
       `/api/v1/suppliers/${supplierId}`,

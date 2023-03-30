@@ -19,7 +19,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import AddSupplierPage from "./new/AddSupplierPage";
+import AddSupplierPage from "./ModalSupplier";
 
 export default () => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
@@ -82,7 +82,7 @@ export default () => {
           Supplier Page
         </Typography>
         <Box>
-          <Button variant="contained" onClick={() => handleOpenModal}>
+          <Button variant="contained" onClick={() => handleOpenModal()}>
             ADD SUPPLIER
           </Button>
         </Box>
