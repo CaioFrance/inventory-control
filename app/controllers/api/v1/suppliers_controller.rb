@@ -3,16 +3,20 @@ class Api::V1::SuppliersController < ApplicationController
 
   before_action :authorize_request
   before_action :find_supplier, only: %i(show update destroy)
+  rescue_from ActiveRecord::InvalidForeignKey, with: :contains_products
 
   def index
     @suppliers = Supplier.where("user_id = ?", @current_user.id)
+                .order("created_at DESC")
                 .page(current_page()).per(per_page())
 
     render json: @suppliers, meta: meta_attributes(@suppliers), adapter: :json
   end
 
   def create
-    @supplier = Supplier.new(supplier_params, user: @current_user)
+    @supplier = Supplier.new(supplier_params)
+
+    @supplier.user = @current_user
 
     if @supplier.save
       render json: @supplier, status: :created
@@ -34,6 +38,8 @@ class Api::V1::SuppliersController < ApplicationController
   end
 
   def destroy
+    p @supplier
+
     @supplier.destroy
   end
 
@@ -42,10 +48,14 @@ class Api::V1::SuppliersController < ApplicationController
   def find_supplier
     id = params[:id]
 
-    @supplier = Supplier.find(id).where("user_id = ?", @current_user.id)
+    @supplier = Supplier.where("user_id = ?", @current_user.id).find(id)
   end
 
   def supplier_params
     params.require(:supplier).permit(:address, :city, :name, :postal_code, :state)
+  end
+
+  def contains_products
+    render json: {message: "Supplier contains products. Impossible remove."}, status: :bad_request
   end
 end
