@@ -2,8 +2,7 @@ class Api::V1::SuppliersController < ApplicationController
   include Paginable
 
   before_action :authorize_request
-  before_action :find_supplier, only: %i(show update destroy)
-  rescue_from ActiveRecord::InvalidForeignKey, with: :contains_products
+  before_action :find_supplier, only: %i[show update destroy]
 
   def index
     @suppliers = Supplier.where("user_id = ?", @current_user.id)
@@ -38,9 +37,11 @@ class Api::V1::SuppliersController < ApplicationController
   end
 
   def destroy
-    p @supplier
-
-    @supplier.destroy
+    begin
+      @supplier.destroy
+    rescue ActiveRecord::InvalidForeignKey => e
+      contains_products()
+    end
   end
 
   private

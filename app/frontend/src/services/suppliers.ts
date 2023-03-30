@@ -9,7 +9,7 @@ export type Supplier = {
   state: string;
 };
 
-export type AddSupplier = {
+export type AddOrUpdateSupplier = {
   name: string;
   address: string;
   postal_code: string;
@@ -28,7 +28,7 @@ export async function getAllSuppliers(page = 1): Promise<
     }
   | undefined
 > {
-  const token = localStorage.getItem("iventory.control.token");
+  const token = localStorage.getItem("inventory.control.token");
 
   try {
     const {
@@ -52,8 +52,8 @@ export async function getAllSuppliers(page = 1): Promise<
   }
 }
 
-export async function createSupplier(addSupplier: AddSupplier) {
-  const token = localStorage.getItem("iventory.control.token");
+export async function createSupplier(addSupplier: AddOrUpdateSupplier) {
+  const token = localStorage.getItem("inventory.control.token");
 
   try {
     await axios.post(
@@ -69,12 +69,32 @@ export async function createSupplier(addSupplier: AddSupplier) {
 }
 
 export async function deleteSupplier(supplierId: number) {
-  const token = localStorage.getItem("iventory.control.token");
+  const token = localStorage.getItem("inventory.control.token");
 
   try {
     await axios.delete(`/api/v1/suppliers/${supplierId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function editSupplier(
+  supplier: AddOrUpdateSupplier,
+  supplierId: number
+) {
+  const token = localStorage.getItem("inventory.control.token");
+
+  console.log(token);
+  try {
+    await axios.put(
+      `/api/v1/suppliers/${supplierId}`,
+      { supplier },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   } catch (err) {
     console.error(err);
   }

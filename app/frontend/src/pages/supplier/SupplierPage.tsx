@@ -5,7 +5,6 @@ import {
   getAllSuppliers,
   Supplier,
 } from "../../services/suppliers";
-import Layout from "../../layout/Layout";
 import { Edit, Delete } from "@mui/icons-material";
 import {
   Pagination,
@@ -21,13 +20,14 @@ import {
   Typography,
 } from "@mui/material";
 import AddSupplierPage from "./new/AddSupplierPage";
-import axios from "axios";
 
 export default () => {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [supplier, setSupplier] = useState<Supplier | null>(null);
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
+  const [isAddMode, setIsAddMode] = useState(false);
 
   useEffect(() => {
     setAllSuppliers();
@@ -52,7 +52,14 @@ export default () => {
     setOpenModal(false);
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (supplier: Supplier | null = null) => {
+    if (supplier === null) {
+      setIsAddMode(true);
+    } else {
+      setIsAddMode(false);
+      setSupplier(supplier);
+    }
+
     setOpenModal(true);
   };
 
@@ -75,7 +82,7 @@ export default () => {
           Supplier Page
         </Typography>
         <Box>
-          <Button variant="contained" onClick={handleOpenModal}>
+          <Button variant="contained" onClick={() => handleOpenModal}>
             ADD SUPPLIER
           </Button>
         </Box>
@@ -122,7 +129,10 @@ export default () => {
                   {supplier.state}
                 </TableCell>
                 <TableCell component="th" scope="row" align="center">
-                  <IconButton color="info">
+                  <IconButton
+                    color="info"
+                    onClick={() => handleOpenModal(supplier)}
+                  >
                     <Edit />
                   </IconButton>
                   <IconButton
@@ -140,6 +150,8 @@ export default () => {
 
       <AddSupplierPage
         openModal={openModal}
+        isAddMode={isAddMode}
+        supplier={supplier}
         handleCloseModal={handleCloseModal}
         getAllSuppliers={setAllSuppliers}
       />
